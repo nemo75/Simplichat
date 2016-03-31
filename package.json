@@ -1,0 +1,22 @@
+{
+  "name": "super-chat",
+  "version": "0.1.0",
+  "dependencies": {
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.2.0",
+    "ent": "~0.1.0",
+    "express": "~3.3.4",
+    "mustache": "^2.2.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "semantic-ui-css": "^2.1.6",
+    "socket.io": "~1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "dev": "APP_PORT=1337 node index.js"
+  },
+  "author": "Thomas <thomas.bricquet@gmail.com>",
+  "description": "Beebop"
+}
