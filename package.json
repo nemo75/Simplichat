@@ -13,10 +13,6 @@
     "socket.io": "~1.2.1"
   },
   "devDependencies": {},
-  "scripts": {
-    "start": "node index.js",
-    "dev": "APP_PORT=1337 node index.js"
-  },
   "author": "Thomas <thomas.bricquet@gmail.com>",
   "description": "Beebop"
 }

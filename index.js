@@ -6,9 +6,9 @@ var ent = require('ent');
 var fs = require('fs');
 
 // On charge la page index.html
-var port = process.env.PORT || process.env.APP_PORT || 8080;
+ var port = process.env.PORT || process.env.APP_PORT || 8080;
 app.use(express.static(__dirname + '/public'));
-server.listen(port);
+ server.listen(port);
 
 var users = {};
 var messages = [];
@@ -71,4 +71,3 @@ io.sockets.on('connection', function(socket){
         io.sockets.emit('newmsg', message);
     });
 });
-

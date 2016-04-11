@@ -1,17 +1,30 @@
 body {
-	background-color: white;
+/*	background-size: cover;
+	background-position: center;
+	background-image: url(corn.jpg);*/
+	overflow: none;
 }
 .title {
 	width: 100%;
 	height: auto;
-	padding: 20px;
+	padding: 10px;
 	background-color: #E20746;
-	margin-bottom: 10%;
+	margin-bottom: 2%;
 	display: inline-block;
+}
+#bouton#bouton#bouton#bouton#bouton#bouton {
+	width: 20%;
+	height:38px;
+	margin:0px;
+	background-color: rgb(226, 7, 70);
+}
+label {
+	color : white;
+	font-size: 18px;
 }
 .master {
 	width: 1200px;
-	margin: auto;
+	margin: auto
 }
 #utilisateur {
 	font-size: 12px;
@@ -26,9 +39,12 @@ body {
 	vertical-align: top;
 	margin: auto;
 	display: inline-block;
-	width: 200px;
-	height: 550px;
-	background-color: #E20746;
+	width: 238px;
+	height: 539px;
+	background-color: rgba(226,7,70, 0.6);
+	overflow-y: scroll;
+	border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 .block {
 	display: inline-block;
@@ -39,12 +55,15 @@ body {
 }
 
 #messages {
-	height: 550px;
-	width: 950px;
+	height: 500px;
+	width:950px;
 	border: 1px solid #E20746;
-	margin: auto;
-	overflow: scroll;
-	/*background-color: #f0f0f0;*/
+	margin: 0 auto 1px auto;
+	overflow-y: scroll;
+	background-color: rgba(255,255,255,0.6);
+	border-radius: 0px;
+	border-bottom-left-radius: 8px;
+	border: 1px solid rgb(266,7,70) !important;
 }
 
 .message {
@@ -60,4 +79,10 @@ body {
 .pseudo {
 	font-size: 16px;
 	color:#00BFA5;
+}
+.troll{
+    float: left;
+    left: 20px;
+    margin: 0px;
+    padding: 0px;
 }

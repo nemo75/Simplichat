@@ -2,21 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Chat de fou</title>
     <link rel="stylesheet" href="semantic.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body class="coverAccueil">
     <div class="title">
-        <h1 class="titre">Bienvenu sur SimpliChat!</h1>
+        <h1 class="titre">Bienvenue sur SimpliChat!</h1>
     </div>
 
     <div id="login">
         <form method="post" id="loginform" class="ui form">
             <label for="">Choisis ton pseudo !</label><br>
-            <input type="text" name="login" id="username" placeholder="8 charact&egrave;re max" maxlength="20">
-            <label for="couleur">Choisis la couleur de ton pseudo !<br>
-              <input type="text" name="color" id="own"></option><br><br>
+            <input type="text" name="login" id="username" placeholder="20 charact&egrave;re max" maxlength="20">
+            <!-- <label for="couleur">HEXADECIMALE !<br>
+              <input type="text" name="color" id="own"></option><br><br> -->
               <label for="">Ou choisis ta couleur parmis cette selection !</label>
               <select name="couleur" id="couleur">
                   <option value="0">choisis ta couleur</option>
@@ -26,7 +28,6 @@
                   <option value="purple">Violet</option>
                   <option value="orange">Orange</option>
               </select>
-          </label>
           <input type="submit" value="envoyer" class="ui button" id="but">
       </form>
   </div>
@@ -34,35 +35,49 @@
   <div class="master" style="display:none;">
     <div class="block">
         <div id="messages">
-            <div class="message" id= "msgtpl" style="display:none;">
-                <h3 style="color:{{user.couleur}};color:{{user.own}}; display:inline-block;">{{user.username}} :</h3><p style="display:inline-block; font-size: 17px; color:#E20746; margin-left:15px;text-transform: lowercase;"> {{message}}</p> <p style="display:inline-block; float:right; color:#E20746;"> {{h}}:{{m}}:{{s}}</p>
-                <!-- {{user.couleur}} -->
+            <div class="message" id= "msgtpl" style="display:none;" class="mCustomScrollbar" data-mcs-theme="dark">
+                <h3 style="color:{{user.couleur}};color:{{user.own}}; display:inline-block;">{{user.username}} :</h3><p style="display:inline-block; font-size: 17px; color:#E20746; margin-left:15px;"> {{message}}</p> <p style="display:inline-block; float:right; color:#E20746;"> {{h}}:{{m}}:{{s}}</p>
             </div>    
         </div>
+
         <div class="inp">
             <form  class="ui form" action="/" method="post" id="formulaire_chat" style="vertical-align: bottom;">
-             <input type="text" name="message" id="message" placeholder="Ecris ton message" size="50" maxlength="70">
-             <input type="submit" id="envoi_message" value="envoyer" class="ui red tiny button">
-         </form>
+            <input style="border-radius:0px; border:1px solid #E20746 ; width:845px; margin:0px; background-color:rgba(255,255,255,0.6);border-bottom-left-radius:8px;" type="text" name="message" id="message" placeholder="Ecris ton message" size="50" maxlength="113" autocomplete="off">
+            <input style="border-radius:0px; border:1px solid #E20746 ; width:100px;height:38px;margin:0px;text-transform:uppercase;" type="submit" id="envoi_message" value="envoyer" class="ui red tiny button">
+        </form>
      </div>
  </div>
- <div id="users">
- </div>
+ <div id="users"></div>
 </div>
-<a href="troll.html" class="ui button inverted yellow">NE CLIC PAS</a>
+<a href="troll.html" class="ui massive button inverted green">NEU CLIC PA G DI NEU KLIQUE PA</a></br>
+<a href="https://github.com/nemo75/Simplichat" style="color: white; font-size: 20px; text-align: center;">MON LIEN GITHUB POUR CONTRIBUER A CE MAGNIFIQUE TCHAT</a>
+  <div id="preloader" style="display : none"></div>
+  <script>
+    window.bgImgs = [
+    'corn.jpg',
+    'poney.jpg',
+    'bisounours.jpeg'
 
+   ];
+  var bgImgsLen = bgImgs.length;
+  var curPos    = -1;
+</script>
 <script src="jquery.min.js"></script>
+ <script src="jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script>
+ <script src="mustache.js"></script>
+  <script>
    (function($){
+       $(window).load(function(){
+          $("#block").mCustomScrollbar();
+       });
        // Connexiona socket.io
        var socket = io();
        var msgtpl = $('#msgtpl').html();
        $('#msgtpl').remove();
 
 
-
-       $('#loginform').submit(function(event){
+       $('#loginform').submit(function(event, user){
         event.preventDefault();
         socket.emit('login',{
             username : $('#username').val(),
@@ -71,15 +86,13 @@
             id : $(this.username).val()
         })
     });
-       socket.on('logged', function(){
-        $('#loging').fadeOut();
-       });
-
 
          // GESTION DES CONNECTES
             socket.on('newusr', function(user) {
-                $('#users').append('<div id="' + user.id + '">' + '<img src="msn.png" alt="icon msn" width="25" height="25">' + '<h2 class="ui white inverted button">' + user.username + '</h2> </div>');
+                $('#users').append('<div id="' + user.id + '">' + '<img src="http://placekitten.com/52/52?' + user.id + '" alt="chaton">' + '<h2 class="ui white huge inverted button" style="vertical-align:top; font-size=1.32em;">'+user.username + '</h2> </div>');
+                 $('#messages').append('<p id="' + user.id + '">' + user.username + ' a rejoint le Chat !</em></p>');
             })
+
 
 
          // gerer disconect
@@ -90,8 +103,11 @@
 
 
          socket.on('newmsg', function(message){
-          Mustache.render(msgtpl, message);
-          $('#messages').append('<div class="message">' +  Mustache.render(msgtpl, message) + '</div>');
+          var mustacheMsg = Mustache.render(msgtpl, message);
+          if (message.message == false){
+            return;
+          }
+          $('#messages').append('<div class="message">' +  mustacheMsg + '</div>');
           $('#messages').animate({scrollTop : $('#messages').prop('scrollHeight')}, 5);
       })
 
@@ -109,7 +125,11 @@
         });
 
      })(jQuery);
- </script>
- <script src="mustache.js"></script>
-</body>
+ </script> 
+<script type="text/javascript" src="app.js"></script>
+</body> 
 </html>
+
+
+
+
